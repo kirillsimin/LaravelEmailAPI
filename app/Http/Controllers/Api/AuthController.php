@@ -30,7 +30,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (! $token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'We can\'t find an account with this credentials.'], 401);
+            return response()->json(['error' => 'We can\'t find an account with these credentials.'], 401);
         }
 
         return response()->json(compact('token'));
@@ -40,11 +40,7 @@ class AuthController extends Controller
     {
         $this->validate($request, ['token' => 'required']);
 
-        try {
-            JWTAuth::invalidate($request->input('token'));
-            return response()->json(['success' => true, 'message' => 'The token is now invalid']);
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'Failed to logout, please try again.'], 500);
-        }
+        JWTAuth::invalidate($request->input('token'));
+        return response()->json(['success' => true, 'message' => 'The token is now invalid']);
     }
 }
