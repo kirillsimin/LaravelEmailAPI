@@ -14,7 +14,7 @@ class EmailController extends Controller
 {
     public function index()
     {
-        return Auth::user()->emails()->get();
+        return Auth::user()->emails()->orderBy('id', 'desc')->get();
     }
 
     public function store(StoreEmailRequest $request)

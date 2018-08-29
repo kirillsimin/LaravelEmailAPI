@@ -19,6 +19,8 @@ class EmailService
             Mail::to($email->user->emai)->send(new UserEmail($email));
         } catch (Exception $e) {
             Mail::to($email->user->email)->send(new UserEmail($email));
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
     }
 }
