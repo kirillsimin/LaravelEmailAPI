@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="links">
-                    Unitrend Coding Challenge <br> Email Service API
+                    Unitrends Coding Challenge <br> Email Service API
                 </div>
             </div>
         </div>

@@ -20,6 +20,6 @@ class UserEmail extends Mailable
 
     public function build()
     {
-        return $this->view('email.unitrends-email')->with(['email' => $this->email]);
+        return $this->subject($this->email->subject)->view('email.unitrends-email')->with(['email' => $this->email]);
     }
 }
