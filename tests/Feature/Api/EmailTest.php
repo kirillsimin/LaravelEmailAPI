@@ -3,8 +3,12 @@
 namespace Tests\Feature\Api;
 
 use Tests\TestCase;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\UserEmail;
 
 class EmailTest extends TestCase
 {
@@ -15,6 +19,7 @@ class EmailTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        Mail::fake();
         $this->user = factory(\App\Models\User::class)->create();
     }
 
@@ -34,19 +39,23 @@ class EmailTest extends TestCase
     /** @test */
     public function user_can_create_a_new_email()
     {
-        $text = 'Sample test';
-        $subject = 'Sample subject';
+        $email = [
+            'text' => 'Sample test',
+            'subject' => 'Sample subject',
+        ];
 
         $response = $this->actingAs($this->user)->
-                    json('POST', 'api/emails', [
-                        'text'      => $text,
-                        'subject'   => $subject,
-                    ]);
+                    json('POST', 'api/emails', $email);
 
         $response->assertStatus(201)->assertJson([
-            'text'      => $text,
-            'subject'   => $subject,
+            'text'      => $email['text'],
+            'subject'   => $email['subject'],
         ]);
+
+        Mail::assertSent(UserEmail::class, function ($mail) use ($email) {
+            return ($mail->email->text === $email['text']) &&
+                ($mail->email->subject === $email['subject']);
+        });
     }
 
     /** @test */

@@ -11,7 +11,7 @@ class UserEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $email;
+    public $email;
 
     public function __construct($email)
     {
