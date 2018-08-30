@@ -154,7 +154,7 @@
                                     word-break: break-all;
                                     word-break: break-word;
                                 ">
-                                    This email was sent through .
+                                    This email was sent through a coding challenge sample application.
                                 </p>
                             </td>
                         </tr>
